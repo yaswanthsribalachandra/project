@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+python-multipart
+SQLAlchemy
+python-jose[cryptography]
+pydantic[email]<2
+email-validator
+numpy
+scipy
+librosa
+soundfile
+torch
+transformers
+openai-whisper
+huggingface-hub
+Pillow
