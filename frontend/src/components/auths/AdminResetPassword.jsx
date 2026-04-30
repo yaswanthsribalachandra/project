@@ -29,8 +29,10 @@ export default function AdminResetPassword() {
         new_password: password,
       });
       navigate("/login");
-    } catch {
-      setError("Password reset failed. Please try again.");
+    } catch (error) {
+      setError(
+        error.response?.data?.detail || "Password reset failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }

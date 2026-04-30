@@ -188,10 +188,23 @@ async def admin_reset_password(data: ResetPassword):
     if not admin:
         raise HTTPException(status_code=404, detail="Admin not found")
 
+    # ❌ Prevent same password reuse
+    if verify_password(data.new_password, admin.password):
+        raise HTTPException(
+            status_code=400,
+            detail="New password must be different from old password"
+        )
+
+    # ✅ Hash and overwrite password
     admin.password = hash_password(data.new_password)
+
+    # clear OTP (optional if not needed here)
+    admin.otp = None
+    admin.otp_expiry = None
+
     await admin.save()
 
-    return {"message": "Password reset successful"}
+    return {"message": "Password updated successfully"}
 
 
 @router.get("/admin/details")
